@@ -6,11 +6,19 @@ const MainLayout = () => {
   return (
     <Box
       sx={{
-        display: 'flex'
+        display: 'flex',
+        position: 'relative'
       }}
     >
       <Sidebar />
-      <Outlet />
+      <Box
+        sx={{
+          width: '80%',
+          marginLeft: '18%'
+        }}
+      >
+        <Outlet />
+      </Box>
     </Box>
   )
 }
