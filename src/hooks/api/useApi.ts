@@ -41,39 +41,38 @@ const useApi = () => {
    * @async
    * @function callApi
    * @template T
-   * @param {IApiOptions} options - The options for the API call.
-   * @param {string} options.method - The HTTP method for the API call.
-   * @param {string} options.endpoint - The endpoint for the API call.
-   * @param {Object} [options.headers={}] - The headers for the API call.
-   * @param {Object} [options.params={}] - The parameters for the API call.
-   * @param {Object} [options.body={}] - The body of the request for the API call.
+   * @param {string} method - The HTTP method for the API call.
+   * @param {string} endpoint - The endpoint for the API call.
+   * @param {Object} [headers={}] - The headers for the API call.
+   * @param {Object} [params={}] - The parameters for the API call.
+   * @param {Object} [body={}] - The body of the request for the API call.
    * @returns {Promise<{ data: T }>} - Returns a promise that resolves with the data from the response.
+   * @throws Will throw an error if the API call fails.
    */
   const callApi = useCallback(
-    async <T>({ method, endpoint, headers = {}, params = {}, body = {} }: IApiOptions): Promise<{ data: T }> => {
+    async <T>(method: string, endpoint: string, headers = {}, params = {}, body = {}): Promise<{ data: T }> => {
       try {
-        const headersDefault = { accept: 'application/json', Authorization: `Bearer ${idToken}` }
-        Object.assign(headersDefault, headers)
+        const headersDefault = { accept: 'application/json', Authorization: `Bearer ${idToken}`, ...headers }
         let response
         switch (method) {
           case 'post': {
-            response = await POST(endpoint, body, params, headers)
+            response = await POST(endpoint, body, params, headersDefault)
             break
           }
           case 'put': {
-            response = await PUT(endpoint, body, params, headers)
+            response = await PUT(endpoint, body, params, headersDefault)
             break
           }
           case 'delete': {
-            response = await DELETE(endpoint, body, params, headers)
+            response = await DELETE(endpoint, body, params, headersDefault)
             break
           }
           case 'patch': {
-            response = await PATCH(endpoint, body, params, headers)
+            response = await PATCH(endpoint, body, params, headersDefault)
             break
           }
           default: {
-            response = await GET(endpoint, params, headers)
+            response = await GET(endpoint, params, headersDefault)
           }
         }
         return response

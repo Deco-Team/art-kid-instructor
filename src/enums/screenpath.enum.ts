@@ -1,4 +1,6 @@
 export enum ScreenPath {
   LOGIN = 'login',
-  DASHBOARD = 'dashboard'
+  DASHBOARD = 'dashboard',
+  COURSE = 'course-list',
+  COURSE_DETAIL = 'course/:id'
 }
