@@ -14,7 +14,7 @@ const MainLayout = () => {
       <Box
         sx={{
           width: '80%',
-          marginLeft: '18%'
+          marginLeft: '15%'
         }}
       >
         <Outlet />

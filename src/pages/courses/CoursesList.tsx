@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Delete, Edit, Visibility } from '@mui/icons-material'
-import { Chip, IconButton } from '@mui/material'
+import { Add, Delete, Edit, Visibility } from '@mui/icons-material'
+import { Button, Chip, IconButton } from '@mui/material'
 import { MaterialReactTable, MRT_ColumnDef, MRT_PaginationState, useMaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Level, Status } from '~/enums/course.enum'
+import { ScreenPath } from '~/enums/screenpath.enum'
 import useCourse from '~/hooks/api/useCourse'
 import { IPagination } from '~/interfaces'
 import { ICourseColumn, ICourseResponse } from '~/interfaces/course.interface'
+import { convertMinutes } from '~/utils'
 
 const CoursesList = () => {
   const initialData = {
@@ -50,7 +52,10 @@ const CoursesList = () => {
       },
       {
         accessorKey: 'duration',
-        header: 'Duration'
+        header: 'Duration',
+        Cell({ row }) {
+          return convertMinutes(row.original.duration)
+        }
       },
       {
         accessorKey: 'level',
@@ -130,7 +135,7 @@ const CoursesList = () => {
   const table = useMaterialReactTable({
     columns: columns,
     data: data.docs,
-    // enableTopToolbar: false,
+    enableTopToolbar: false,
     rowCount: data.totalDocs,
     pageCount: data.totalPages,
     manualPagination: true,
@@ -157,7 +162,19 @@ const CoursesList = () => {
     onPaginationChange: setPagination
   })
 
-  return <MaterialReactTable table={table} />
+  return (
+    <>
+      <Button
+        variant='outlined'
+        onClick={() => navigate('/' + ScreenPath.ADD_COURSE)}
+        sx={{ mt: 2, ml: 2 }}
+        startIcon={<Add />}
+      >
+        Create new course
+      </Button>
+      <MaterialReactTable table={table} />
+    </>
+  )
 }
 
 export default CoursesList
