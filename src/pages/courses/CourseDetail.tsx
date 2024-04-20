@@ -6,15 +6,16 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Level, Status, Type } from '~/enums/course.enum'
 import useCourse from '~/hooks/api/useCourse'
 import { ICourseResponse } from '~/interfaces/course.interface'
+import { convertMinutes } from '~/utils'
 
 const CourseDetail = () => {
-  const initialData = {
+  const initialData: ICourseResponse = {
     _id: '',
     title: '',
     description: '',
     objective: '',
     thumbnail: '',
-    duration: '',
+    duration: 0,
     price: 0,
     level: '',
     status: '',
@@ -50,7 +51,7 @@ const CourseDetail = () => {
 
   const StyledChipType = ({ value }: { value: string }) => {
     switch (value) {
-      case Type.TRIAL:
+      case Type.PAID:
         return <Chip color='success' variant='outlined' label={value} />
       default:
         return <Chip color='warning' variant='outlined' label={value} />
@@ -72,7 +73,7 @@ const CourseDetail = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <img style={{ borderRadius: '5px' }} width='49%' src={data.thumbnail} />
         <Paper elevation={3} sx={{ width: '49%', p: 4 }}>
-          <Typography margin={1}>Duration: {data.duration}</Typography>
+          <Typography margin={1}>Duration: {convertMinutes(data.duration)}</Typography>
           <Typography margin={1}>Description: {data.description}</Typography>
           <Typography margin={1}>Objective: {data.objective}</Typography>
           <Typography margin={1}>Price: {data.price.toLocaleString()} VND</Typography>
@@ -88,7 +89,7 @@ const CourseDetail = () => {
         Lessons
       </Typography>
       {data.lessons.map((items, i) => (
-        <Card key={i} sx={{ m: 2, p: 1 }}>
+        <Card key={i} sx={{ m: 2, p: 1, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Box width='50%'>
