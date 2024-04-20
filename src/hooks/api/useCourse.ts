@@ -32,7 +32,6 @@ const useCourse = () => {
     async (id: string) => {
       try {
         const response = await callApi<{ data: ICourseResponse }>('get', `${rootEndpoint}/${id}`)
-        console.log(response)
         return response.data
       } catch (error) {
         notifyError('Error!')
@@ -44,7 +43,7 @@ const useCourse = () => {
   const createCourse = useCallback(
     async (data: ICourseRequest) => {
       try {
-        const response = await callApi('get', rootEndpoint, {}, {}, data)
+        const response = await callApi('post', rootEndpoint, {}, {}, data)
         return response.data
       } catch (error) {
         notifyError('Error!')

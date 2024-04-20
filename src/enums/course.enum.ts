@@ -12,6 +12,6 @@ export enum Status {
 }
 
 export enum Type {
-  FEE = 'FEE',
-  TRIAL = 'TRIAL'
+  FREE = 'FREE',
+  PAID = 'PAID'
 }
