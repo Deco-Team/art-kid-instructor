@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import { useEffect } from 'react'
 
 const Dashboard = () => {
@@ -6,7 +7,11 @@ const Dashboard = () => {
     return () => {}
   }, [])
 
-  return <div>Dashboard</div>
+  return (
+    <Typography variant='h3' m={3} fontWeight={700}>
+      🚧 UNDER MAINTENANCE 🚧
+    </Typography>
+  )
 }
 
 export default Dashboard

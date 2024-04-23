@@ -49,7 +49,7 @@ const initialCourseData: ICourseRequest = {
 }
 
 const AddCourse = () => {
-  const { register, handleSubmit, control } = useForm<ICourseRequest>({
+  const { register, handleSubmit, control, getValues } = useForm<ICourseRequest>({
     defaultValues: initialCourseData
   })
 
@@ -130,7 +130,7 @@ const AddCourse = () => {
     const request = {
       ...data,
       duration: Number(data.duration),
-      price: Number(data.price),
+      price: getValues('type') === Type.FREE ? 0 : Number(data.price),
       thumbnail: cloudinaryURLConvert(uuid, 'image'),
       lessons: convertVideoToLink(lessons)
     }
@@ -198,6 +198,7 @@ const AddCourse = () => {
                 </Select>
               </FormControl>
               <TextField
+                disabled={getValues('type') === Type.FREE}
                 required
                 {...register('price')}
                 inputProps={{ min: 0, max: 100000000, step: 1 }}
